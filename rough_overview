@@ -1,0 +1,12 @@
+- Introduction
+  - Definition of Functional Programming
+  - History
+  - Motivation/application
+  - Comparison with Imperative Programming
+    - Pros/Cons
+- Monads
+  - Basics; intro to Haskell; interactive
+  - Viewers follow along with laptop
+- Examples
+  - Explanation/motivation
+  - Python/Haskell code
