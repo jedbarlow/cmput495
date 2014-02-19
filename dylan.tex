@@ -1,0 +1,55 @@
+\documentclass[presentation.tex]{subfiles}
+
+\begin{document}
+
+\large
+\section{Definition}
+Functional Programming can be best summarized as creating programs that consist solely of functions.
+
+\vspace{\baselineskip}
+A program written in a functional language can be though of as a tree with a single main function which subsequently calls other functions, which call other functions, etcetera.
+
+\vspace{\baselineskip}
+Functions consist of input, a manipulation of that input, and an output. In functional programming the same input should always lead to the same output. This means there is predictability!
+
+\vspace{\baselineskip}
+The most shocking thing about functional languages is that a variable, once given a value, will never change. You can think of variables in a functional language like a variable in mathematics. % Reinforces the paradigm of same input yields same output.
+
+% Functions are first class citizens.
+
+\pagebreak
+\section{History}
+\subsection{A stack based language: Lisp}
+Lisp was based on a simple idea: make everything a pair.
+
+\vspace{\baselineskip}
+Adding 2 and 3 together in this ideology would actually be carried out as (addition 2 3). If we wanted to compute a more complicated operation we would simply have a deeper stack: (multiply 2 (multiply 3 4)).
+
+\pagebreak
+\section{Motivation}
+A functional program is often much shorter than a imperative program. This also helps to make them often much easier to understand and write without errors.
+
+\vspace{\baselineskip}
+Quicksort written in haskell:
+\scriptsize
+\begin{verbatim}
+quicksort :: Ord a => [a] -> [a]
+quicksort [] = []}
+quicksort (p:xs) = (quicksort lesser) ++ [p] ++ (quicksort greater)
+    where
+      lesser = filter (< p) xs
+      greater = filter (>= p) xs
+\end{verbatim}
+\large
+
+\vspace{\baselineskip}
+This quicksort will sort anything where sort could be defined on. There is no need to specify a type or a size.
+\vspace{\baselineskip}
+An even shorter quicksort, notice the set builder notation:
+\scriptsize
+\begin{verbatim}
+qsort (p:xs) = qsort [x | x<-xs, x<p] ++ [p] ++ qsort [x | x<-xs, x>=p]
+\end{verbatim}
+\large
+
+\end{document}
