@@ -1,38 +1,68 @@
 \documentclass[presentation.tex]{subfiles}
-
 \begin{document}
 
 
 \section{Definition}
 \begin{frame}
   \frametitle{Definition}
-  Functional Programming can be best summarized as creating programs that consist solely of functions.
+  Functional Programming is programming:
+  \begin{itemize}
+    \item with no implicit state.
+    \item where a variable, once given a value, does not ever change; it would have to alter the implicit state if it did.
+    \item where there are no loops, only recursion.
+    \item where you tell your computer what to do rather than how to do it.
+    \item where a program is made of trees of functions.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Definition}
+  Functional Programming is programming pure functions.
 
   \vspace{\baselineskip}
-  A program written in a functional language can be though of as a tree with a single main function which subsequently calls other functions, which call other functions, etcetera.
+  Pure functions are functions that:
+  \begin{itemize}
+    \item the only accessible element of a function is it's output.
+    \item the only things that affect the output is the inputs.
+    \item the inputs are fully determined before the output is generated.
+  \end{itemize}
 
   \vspace{\baselineskip}
-  Functions consist of input, a manipulation of that input, and an output. In functional programming the same input should always lead to the same output. This means there is predictability!
+  A pure function will always yield the same output given the same input.
+\end{frame}
+
+\section{History}
+\begin{frame}
+  \frametitle{History}
+  It is normally accepted that the first functional language is lambda calculus; created by Alonzo Church. Most functional languages are just extensions on lambda calculus.
 
   \vspace{\baselineskip}
-  The most shocking thing about functional languages is that a variable, once given a value, will never change. You can think of variables in a functional language like variables in mathematics. % Reinforces the paradigm of same input yields same output.
+  Surprisingly the first functional language you could code in drew only minor influence from lambda calculus. This language was Lisp. Lisp was first conceptualized in the late 50s by John McCarthy as a means to process lists algebraically to help his research into artificial intelligence.
 
-  % Functions are first class citizens.
+  \vspace{\baselineskip}
+  Lisp is known as one of the most influential languages ever written.
 \end{frame}
 
 
 \begin{frame}
   \frametitle{History}
+  Following Lisp the functional language spectrum branched creating a plethora of languages eventually creating Haskell.
+
+  \vspace{\baselineskip}
+  Haskell is a mainly functional language.
+\end{frame}
+
+\section{Motivation}
+\begin{frame}
+  \frametitle{Motivation}
+  A functional program is often much shorter than a imperative program. This also helps to make them often much easier to understand and write without errors.
 \end{frame}
 
 
 \begin{frame}[fragile]
   \frametitle{Motivation}
-  A functional program is often much shorter than a imperative program. This also helps to make them often much easier to understand and write without errors.
-
-  \vspace{\baselineskip}
   Quicksort written in haskell:
-
   \begin{lstlisting}[language=Haskell]
     quicksort :: Ord a => [a] -> [a]
     quicksort [] = []
@@ -43,23 +73,46 @@
   \end{lstlisting}
 
   \vspace{\baselineskip}
-  This quicksort will sort anything where sort could be defined on. There is no need to specify a type or a size.
-\end{frame}
-
-\begin{frame}[fragile]
-  \vspace{\baselineskip}
   An even shorter quicksort, notice the set builder notation:
-
   \begin{lstlisting}[language=Haskell]
     qsort (p:xs) = qsort [x | x<-xs, x<p] ++ [p] ++ qsort [x | x<-xs, x>=p]
   \end{lstlisting}
 \end{frame}
 
 
-% References:
-% http://www.haskell.org/haskellwiki/Functional_programming
-% http://www.haskell.org/haskellwiki/Introduction#What_is_functional_programming.3F
-% http://en.wikipedia.org/wiki/Functional_programming
-% http://www.cse.chalmers.se/~rjmh/Papers/whyfp.pdf
+\begin{frame}
+  \frametitle{Motivation}
+  Possibly the greatest advantage of functional programming is that since you are writing pure functions, there are no side effects.
+
+  \vspace{\baselineskip}
+  In other words it is easy to see what any output will be given a input.
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Motivation}
+  Another strong advantage of functional programming is since variables are immutable we never have to guess what they will be at a certain point in a program.
+
+  \vspace{\baselineskip}
+  The immutability of variables and the no side effects mean that functional programming make it a ideal candidate for parallel computing.
+\end{frame}
+
+\section{References}
+\begin{frame}
+  \frametitle{References}
+  List of References:
+  \tiny
+  \begin{itemize}
+    \item haskell.org/haskellwiki/Functional\_programming
+    \item haskell.org/haskellwiki/Introduction#What\_is\_functional\_programming.3F
+    \item en.wikipedia.org/wiki/Functional\_programming
+    \item cse.chalmers.se/$\sim$rjmh/Papers/whyfp.pdf
+    \item stackoverflow.com/questions/602444/what--is--functional--declarative--and--imperative--programming
+    \item haskell.cs.yale.edu/wp--content/uploads/2011/01/cs.pdf
+    \item wired.com/wiredenterprise/2011/10/john--mccarthy--father--of--ai--and--lisp--dies--at--84
+  \end{itemize}
+  \normalsize
+\end{frame}
+
 
 \end{document}
