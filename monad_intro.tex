@@ -1,0 +1,59 @@
+\documentclass[presentation.tex]{subfiles}
+
+% An example showing M a --> M b where a != b might be good, e.g. add
+% the show function to the maybe monad to go from a Number to a
+% String.
+
+\begin{document}
+
+\section{Monads}
+\begin{frame}
+  \frametitle{What is a Monad?}
+
+  A way of sequencing computations with extra processing being done
+  implicitly at each step.
+
+  %% Maibe include what wikipedia says...
+  %In functional programming, a monad is a structure that represents
+  %computations defined as sequences of steps. A type with a monad
+  %structure defines what it means to chain operations, or nest
+  %functions of that type together.  \pause
+\end{frame}
+
+\begin{frame}
+  \frametitle{Formal Definition}
+
+  A Monad is a collection of the following entities.
+
+  \begin{description}
+  \item[Type Constructor]
+    $M\ a$
+
+  \item[Unit Function]
+    $f::a\rightarrow M\ a$\\
+    Wrap a regular value into a Monadic type.
+
+  \item[Bind Function]
+    $f::M\ a\rightarrow(a\rightarrow M\ b)\rightarrow b$\\
+    Unwrap $M\ a$, do some processing and get a value of type $b$, then
+    apply $(a\rightarrow M\ b)$ to get a new wrapped value, maybe do
+    more processing, return a value of type $M\ b$.
+
+    Note that $a=b$ may or may not be the case.
+  \end{description}
+
+  Satisfying the following conditions...
+\end{frame}
+
+\begin{frame}
+  \frametitle{Monad Rules}
+  % Add rules that have to be satisfied
+\end{frame}
+
+\begin{frame}
+  \frametitle{How Monads Are Used}
+
+  Sequence together ``computation'' functions of type $a \rightarrow
+  M\ b$ using the $bind$ function.
+\end{frame}
+\end{document}
