@@ -15,19 +15,16 @@
   \end{itemize}
 \end{frame}
 
-
 \begin{frame}
   \frametitle{Definition}
   Functional Programming is programming pure functions.
-
   \vspace{\baselineskip}
   Pure functions are functions that:
   \begin{itemize}
-    \item the only accessible element of a function is it's output.
+    \item the only accessible element of a function is its output.
     \item the only things that affect the output is the inputs.
     \item the inputs are fully determined before the output is generated.
   \end{itemize}
-
   \vspace{\baselineskip}
   A pure function will always yield the same output given the same input.
 \end{frame}
@@ -36,22 +33,18 @@
 \section{History}
 \begin{frame}
   \frametitle{History}
-  It is normally accepted that the first functional language is lambda calculus; created by Alonzo Church. Most functional languages are just extensions on lambda calculus.
-
+  It is normally accepted that the basis for functional language is lambda calculus; created by Alonzo Church. Most functional languages are just extensions on lambda calculus.
   \vspace{\baselineskip}
-  Surprisingly the first functional language you could code in drew only minor influence from lambda calculus. This language was Lisp. Lisp was first conceptualized in the late 50s by John McCarthy as a means to process lists algebraically to help his research into artificial intelligence.
-
+  The first functional language you could code in was Lisp. Lisp was first conceptualized in the late 50s by John McCarthy as a means to process lists algebraically to help his research into artificial intelligence.
   \vspace{\baselineskip}
-  Lisp is known as one of the most influential languages ever written.
+  Lisp is known as one of the most influential languages ever written. It had enough influence to create commercially available computers optimized for it known as Lisp Machines. Interestingly enough the first .com domain was registered to a Lisp Machine manufacturer names Symbolics.
 \end{frame}
-
 
 \begin{frame}
   \frametitle{History}
-  Following Lisp the functional language spectrum branched creating a plethora of languages eventually creating Haskell.
-
+  As functional languages developed none could quite manage to be purely functional as problems developed like how to handle I/O. Even lisp had goto statements.
   \vspace{\baselineskip}
-  Haskell is a mainly functional language.
+  Haskell is a fairly new functional language that attempts to be purely functional.
 \end{frame}
 
 
@@ -60,7 +53,6 @@
   \frametitle{Motivation}
   A functional program is often much shorter than a imperative program. This also helps to make them often much easier to understand and write without errors.
 \end{frame}
-
 
 \begin{frame}[fragile]
   \frametitle{Motivation}
@@ -73,7 +65,6 @@
           lesser = filter (< p) xs
           greater = filter (>= p) xs
   \end{lstlisting}
-
   \vspace{\baselineskip}
   An even shorter quicksort, notice the set builder notation:
   \begin{lstlisting}[language=Haskell]
@@ -81,22 +72,18 @@
   \end{lstlisting}
 \end{frame}
 
-
 \begin{frame}
   \frametitle{Motivation}
   Possibly the greatest advantage of functional programming is that since you are writing pure functions, there are no side effects.
-
   \vspace{\baselineskip}
   In other words it is easy to see what any output will be given a input.
 \end{frame}
 
-
 \begin{frame}
   \frametitle{Motivation}
   Another strong advantage of functional programming is since variables are immutable we never have to guess what they will be at a certain point in a program.
-
   \vspace{\baselineskip}
-  The immutability of variables and the no side effects mean that functional programming make it a ideal candidate for parallel computing.
+  Some of the largest issues in parallel computing is that the data being manipulated by one process can be affected by another process. The immutability of data and the lack of side effects in functional languages avoid these problems and make them ideal candidates for parallel programming.
 \end{frame}
 
 
@@ -113,6 +100,9 @@
     \item stackoverflow.com/questions/602444/what--is--functional--declarative--and--imperative--programming
     \item haskell.cs.yale.edu/wp--content/uploads/2011/01/cs.pdf
     \item wired.com/wiredenterprise/2011/10/john--mccarthy--father--of--ai--and--lisp--dies--at--84
+    \item en.wikipedia.org/wiki/Symbolics
+    \item en.wikipedia.org/wiki/Lisp_machine
+    \item http://psg.com/~dlamkins/sl/chapter32.html
   \end{itemize}
   \normalsize
 \end{frame}
