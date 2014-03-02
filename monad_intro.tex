@@ -8,6 +8,18 @@
 
 \section{Monads}
 \begin{frame}
+  \frametitle{Problems!}
+
+  With purity and laziness some problems come up.
+
+  \begin{itemize}
+  \item How can we do things like I/O if functions always return the same value?
+  \item What about randomness?
+  \item How do we make sure laziness doesn't interfere with things like I/O?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
   \frametitle{What is a Monad?}
 
   A way of sequencing computations with extra processing being done
@@ -21,6 +33,12 @@
 \end{frame}
 
 \begin{frame}
+  In other words, monads are just a generalization of the semicolon in
+  languages like C. They're a way of sequencing operations while doing
+  the most likely thing you need to do in between the steps.
+\end{frame}
+
+\begin{frame}
   \frametitle{Formal Definition}
 
   A Monad is a collection of the following entities.
@@ -30,11 +48,11 @@
     $M\ a$
 
   \item[Unit Function]
-    $f::a\rightarrow M\ a$\\
+    $return::a\rightarrow M\ a$\\
     Wrap a regular value into a Monadic type.
 
   \item[Bind Function]
-    $f::M\ a\rightarrow(a\rightarrow M\ b)\rightarrow b$\\
+    $(>>=)::M\ a\rightarrow(a\rightarrow M\ b)\rightarrow b$\\
     Unwrap $M\ a$, do some processing and get a value of type $b$, then
     apply $(a\rightarrow M\ b)$ to get a new wrapped value, maybe do
     more processing, return a value of type $M\ b$.
@@ -55,5 +73,23 @@
 
   Sequence together ``computation'' functions of type $a \rightarrow
   M\ b$ using the $bind$ function.
+\end{frame}
+
+\begin{frame}
+  \frametitle{List Monad}
+
+  The list monad represents a non-deterministic computation. Any
+  function which returns a list can be viewed as a non-deterministic
+  computation -- each element in the list is a possible result.
+
+  Tic Tac Toe can be modeled this way. Each turn produces a number of
+  possible results depending on where the player decides to go.
+\end{frame}
+
+\begin{frame}
+  \frametitle{List Monad}
+
+  Getting a list of all possible states after two turns is a bit more
+  difficult! With the list monad we can sequence turns...
 \end{frame}
 \end{document}
