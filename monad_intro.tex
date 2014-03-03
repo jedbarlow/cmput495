@@ -91,6 +91,63 @@
 \end{frame}
 
 % Python example?
+\begin{frame}[fragile]
+  \frametitle{Maybe Monad in Python}
+  \begin{lstlisting}[frame=single,language=Python,breaklines=true]
+    def computation1(b): ...
+    def computation2(b): ...	
+    def computation3(b): ...
+  \end{lstlisting}
+
+  %\begin{lstlisting}[frame=single,language=Python,breaklines=true]
+  %  bind(bind(bind(b, computation3), computation2), computation1)
+  %\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \begin{lstlisting}[frame=single,language=Python,breaklines=true]
+    computation3(computation2(computation1(x)))
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Python Without the Monad}
+  \begin{lstlisting}[frame=single,language=Python,breaklines=true]
+    v = computation1(x)
+    if (v == None):
+        return None
+    else:
+        v2 = computation2(v)
+        if (v2 == None):
+            return None
+        else:
+            v3 = computation3(v2)
+            if (v3 == None):
+                return None
+            else:
+                v4 = computation4(v3)
+                if (v4 == None):
+                    return None
+                else:
+                    return v4
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Maybe Monad in Python}
+  \begin{lstlisting}[frame=single,language=Python,breaklines=true]
+    def bind(v, f):
+        if (v == None):
+             return None
+        else:			
+            return f(v)
+  \end{lstlisting}
+
+  \begin{lstlisting}[frame=single,language=Python,breaklines=true]
+    bind(bind(bind(b, computation1), computation2), computation3)
+  \end{lstlisting}
+\end{frame}
+
 
 \begin{frame}[fragile]
   \frametitle{Log Writer Monad}
