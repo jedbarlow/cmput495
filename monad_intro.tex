@@ -228,4 +228,64 @@
   function takes the value to another value mapped in IO.
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Elmer Fudd The Glorious IO Example}
+
+  However, note that
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    elmerFudd :: String -> String
+  \end{lstlisting}
+
+  and not
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    elmerFudd :: String -> IO String
+  \end{lstlisting}
+
+  So, we can't use elmerFudd as the second argument to bind :(.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Elmer Fudd The Glorious IO Example}
+
+  However, note that
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    elmerFudd :: String -> String
+  \end{lstlisting}
+
+  and doesn't have any IO. So, how can we stuff a line of IO into it?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{liftM}
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    liftM :: Monad m => (a1 -> r) -> m a1 -> m r
+  \end{lstlisting}
+
+  liftM takes a function and wraps it in a monad. So,
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    liftM elmerFudd :: IO String -> IO String
+  \end{lstlisting}
+
+  And thus
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    getLine :: IO String
+    liftM elmerFudd getLine :: IO String
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Finally Fuddify}
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    liftM elmerFudd getLine >>= putStrLn
+  \end{lstlisting}
+\end{frame}
+
+
 \end{document}
