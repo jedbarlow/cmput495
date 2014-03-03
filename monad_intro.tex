@@ -13,6 +13,9 @@
   A way of sequencing computations with extra processing being done
   implicitly at each step.
 
+  %This extra processing means that the behavior of computation can be
+  %based on earlier results.
+
   %% Maibe include what wikipedia says...
   %In functional programming, a monad is a structure that represents
   %computations defined as sequences of steps. A type with a monad
@@ -30,14 +33,14 @@
     $M\ a$
 
   \item[Unit Function]
-    $f::a\rightarrow M\ a$\\
+    $unit::a\rightarrow M\ a$\\
     Wrap a regular value into a Monadic type.
 
   \item[Bind Function]
-    $f::M\ a\rightarrow(a\rightarrow M\ b)\rightarrow b$\\
-    Unwrap $M\ a$, do some processing and get a value of type $b$, then
-    apply $(a\rightarrow M\ b)$ to get a new wrapped value, maybe do
-    more processing, return a value of type $M\ b$.
+    $bind::M\ a\rightarrow(a\rightarrow M\ b)\rightarrow b$\\
+    Unwrap $M\ a$, do some processing and get a value of type $b$,
+    then apply $(a\rightarrow M\ b)$ to get a new wrapped value,
+    return a value of type $M\ b$.
 
     Note that $a=b$ may or may not be the case.
   \end{description}
@@ -48,6 +51,34 @@
 \begin{frame}
   \frametitle{Monad Rules}
   % Add rules that have to be satisfied
+  For any values $x::a$, $m::M\ b$ and any functions $f::a \rightarrow M\ b$, $g::b \rightarrow M\ c$, $h::c \rightarrow M\ d$,
+  \begin{itemize}
+  \item
+    $bind(unit(x), f) = f(x)$
+  \item
+    $bind(m, unit) = m$
+  \item
+    $bind(bind(m, g), h) = bind(m, (\lambda y \rightarrow bind(g(y), h)))$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Haskell Syntax}
+  $a >>= b = bind(a, b)$
+\end{frame}
+
+\begin{frame}
+  \frametitle{Monad Rules}
+  % Add rules that have to be satisfied
+  For any values $x::a$, $m::M\ d$ and any functions $f::a \rightarrow M\ b$, $g::b \rightarrow M\ c$, $h::c \rightarrow m\ d$,
+  \begin{itemize}
+  \item
+    $unit(x) >>= f = f(x)$
+  \item
+    $m >>= unit = m$
+  \item
+    $(m >>= g) >>= h = m >>= (\lambda y \rightarrow g(y) >>= h)$
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
