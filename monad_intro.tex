@@ -101,7 +101,7 @@
 
     instance (Monoid w) => Monad (Writer w) where
         return a             = Writer (a, mempty)
-        (Writer (a,w)) >>= f = let (a',w') = runWriter \$ f a
+        (Writer (a,w)) >>= f = let (a',w') = runWriter $ f a
                                  in Writer (a', w `mappend` w')
   \end{lstlisting}
   \pause
