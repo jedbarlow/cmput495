@@ -137,4 +137,45 @@
   It's clear that the list monad obeys these laws.
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{IO Monad}
+
+  IO is pretty tricky business in a pure / lazy language.
+
+  \begin{itemize}
+  \item IO involves external state
+  \item IO functions can not be referentially transparent.
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    -- Clearly not a guarantee!
+    getChar == getChar
+  \end{lstlisting}
+
+  \item No guarantee of execution order because of laziness.
+  \end{itemize}
+
+  However we clearly need IO, otherwise we can't really do anything.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{IO Monad}
+
+  Any function which performs any IO can not be guaranteed to be
+  referentially transparent. We want to minimize the number of IO
+  functions, and we want to keep track of functions that perform IO.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{IO Monad}
+
+  Haskell provides the IO monad. When wrapped around a type you can
+  not retrieve any values from the IO monad -- the value is stuck
+  within the IO type forever.
+
+  This causes anything which performs IO to have an IO type, so it is
+  appropriately labeled as performing IO. IO monad taints any function
+  which uses it, making sure that it is typed as being impure.
+\end{frame}
+
+
 \end{document}
