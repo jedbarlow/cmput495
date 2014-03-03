@@ -9,33 +9,19 @@
 \maketitle
 \end{frame}
 
-\section{Introduction}
-\begin{frame}[fragile]
-    \frametitle{Introduction}
-
-    \begin{lstlisting}[frame=single,language=Python,breaklines=true]
-      from itertools import groupby
-
-      wordlist.sort()
-      wordcounts = [(word, len(list(repeats))) for word, repeats in groupby(wordlist)]
-    \end{lstlisting}
-
-    \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
-      map (head &&& length) $ (group . sort)
-    \end{lstlisting}
-\end{frame}
-
+\subfile{dylan.tex}
+\subfile{adam.tex}
 \subfile{monad_intro.tex}
 
 \section{Contributions and Resources}
-\begin{frame}
+\begin{frame}[fragile]
     \begin{itemize}
         \item Author Contributions\\{\scriptsize(in alphabetical order of first name)}
             \begin{itemize}
                 \item Adam St. Arnaud:
                     ...
                 \item Calvin Beck:
-                    ...
+                    List Monad, TicTacToe, IO Monad, Editing
                 \item Dylan Ashley:
                     ...
                 \item Hannah Barlow:
@@ -45,10 +31,37 @@
             \end{itemize}
         \item Resources
             \begin{itemize}
-                \item
-                    http://some.website.com/file
+                \item \url{haskell.org/haskellwiki/Functional_programming}
+                \item \url{haskell.org/haskellwiki/Introduction#What_is_functional_programming.3F}
+                \item \url{en.wikipedia.org/wiki/Functional_programming}
+                \item \url{cse.chalmers.se/~rjmh/Papers/whyfp.pdf}
+                \item \url{stackoverflow.com/questions/602444/what--is--functional--declarative--and--imperative--programming}
+                \item \url{haskell.cs.yale.edu/wp--content/uploads/2011/01/cs.pdf}
             \end{itemize}
     \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{More Resources}
+
+  \begin{itemize}    
+  \item \url{wired.com/wiredenterprise/2011/10/john--mccarthy--father--of--ai--and--lisp--dies--at--84}
+  \item \url{en.wikipedia.org/wiki/Symbolics}
+  \item \url{en.wikipedia.org/wiki/Lisp_machine}
+  \item \url{psg.com/~dlamkins/sl/chapter32.html}
+  \item \url{http://en.wikibooks.org/wiki/Haskell/Understanding_monads}
+  \item \url{http://en.wikibooks.org/wiki/Haskell/Understanding_monads/List}
+  \item \url{http://en.wikibooks.org/wiki/Haskell/Understanding_monads/IO}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{More Resources}
+
+  \begin{itemize}    
+  \item \url{http://en.wikipedia.org/wiki/Tic-tac-toe#Number_of_possible_games}
+  \end{itemize}
+
 \end{frame}
 
 \end{document}

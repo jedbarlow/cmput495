@@ -57,7 +57,7 @@
     Wrap a regular value into a Monadic type.
 
   \item[Bind Function]
-    $(>>=)::M\ a\rightarrow(a\rightarrow M\ b)\rightarrow b$\\
+    $(>>=)::M\ a\rightarrow(a\rightarrow M\ b)\rightarrow M\ b$\\
     Unwrap $M\ a$, do some processing and maybe get a value of type $a$, then
     apply $(a\rightarrow M\ b)$ to get a new wrapped value, return a value of
     type $M\ b$.
@@ -91,6 +91,63 @@
 \end{frame}
 
 % Python example?
+\begin{frame}[fragile]
+  \frametitle{Maybe Monad in Python}
+  \begin{lstlisting}[frame=single,language=Python,breaklines=true]
+    def computation1(b): ...
+    def computation2(b): ...	
+    def computation3(b): ...
+  \end{lstlisting}
+
+  %\begin{lstlisting}[frame=single,language=Python,breaklines=true]
+  %  bind(bind(bind(b, computation3), computation2), computation1)
+  %\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \begin{lstlisting}[frame=single,language=Python,breaklines=true]
+    computation3(computation2(computation1(x)))
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Python Without the Monad}
+  \begin{lstlisting}[frame=single,language=Python,breaklines=true]
+    v = computation1(x)
+    if (v == None):
+        return None
+    else:
+        v2 = computation2(v)
+        if (v2 == None):
+            return None
+        else:
+            v3 = computation3(v2)
+            if (v3 == None):
+                return None
+            else:
+                v4 = computation4(v3)
+                if (v4 == None):
+                    return None
+                else:
+                    return v4
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Maybe Monad in Python}
+  \begin{lstlisting}[frame=single,language=Python,breaklines=true]
+    def bind(v, f):
+        if (v == None):
+             return None
+        else:			
+            return f(v)
+  \end{lstlisting}
+
+  \begin{lstlisting}[frame=single,language=Python,breaklines=true]
+    bind(bind(bind(b, computation1), computation2), computation3)
+  \end{lstlisting}
+\end{frame}
+
 
 \begin{frame}[fragile]
   \frametitle{Maybe Monad in Haskell}
@@ -217,5 +274,103 @@
   which uses it, making sure that it is typed as being impure.
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Elmer Fudd The Glorious IO Example}
+
+  So, it seems we can't mix IO at all with pure functions, which means
+  poor Elmer Fudd will never talk to the outside world.
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    -- Turns any string into soft spoken Fuddy fun times
+    elmerFudd :: String -> String
+    elmerFudd = map (\c -> if c == 'r' || c == 'R' then 'w' else toLower c)
+  \end{lstlisting}
+
+  This is a simple enough pure function, but how can we actually give
+  Elmer their script?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Elmer Fudd The Glorious IO Example}
+
+  Monads are a way of sneakily unwrapping IO. Look at bind:
+
+  \[(>>=)::M\ a\rightarrow(a\rightarrow M\ b)\rightarrow M\ b\]
+
+  In the context of the IO monad this becomes:
+
+  \[(>>=)::\io\ a\rightarrow(a\rightarrow \io\ b)\rightarrow \io\ b\]
+
+  We can cheese the value in the first piece of IO out, as long as the
+  function takes the value to another value mapped in IO.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Elmer Fudd The Glorious IO Example}
+
+  However, note that
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    elmerFudd :: String -> String
+  \end{lstlisting}
+
+  and not
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    elmerFudd :: String -> IO String
+  \end{lstlisting}
+
+  So, we can't use elmerFudd as the second argument to bind :(.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Elmer Fudd The Glorious IO Example}
+
+  However, note that
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    elmerFudd :: String -> String
+  \end{lstlisting}
+
+  and doesn't have any IO. So, how can we stuff a line of IO into it?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{liftM}
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    liftM :: Monad m => (a1 -> r) -> m a1 -> m r
+  \end{lstlisting}
+
+  liftM takes a function and wraps it in a monad. So,
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    liftM elmerFudd :: IO String -> IO String
+  \end{lstlisting}
+
+  And thus
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    getLine :: IO String
+    liftM elmerFudd getLine :: IO String
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Finally Fuddify}
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    liftM elmerFudd getLine >>= putStrLn
+  \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Crouching Tiger, Shouting Fudd}
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    liftM elmerFudd getLine >>= return . (map toUpper) >>= putStrLn
+  \end{lstlisting}
+\end{frame}
 
 \end{document}
