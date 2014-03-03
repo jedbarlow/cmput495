@@ -288,4 +288,12 @@
 \end{frame}
 
 
+\begin{frame}[fragile]
+  \frametitle{Crouching Tiger, Yelling Fudd}
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    liftM elmerFudd getLine >>= return . (map toUpper) >>= putStrLn
+  \end{lstlisting}
+\end{frame}
+
 \end{document}
