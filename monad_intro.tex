@@ -93,6 +93,26 @@
 % Python example?
 
 \begin{frame}[fragile]
+  \frametitle{Maybe Monad in Haskell}
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    data Maybe a = Just a | Nothing
+
+    instance Monad Maybe where
+        return v = Just v
+        v >>= f = case v of
+                       Just v -> f(v)
+                       Nothing -> Nothing
+
+    inc v = Just (v + 1)
+    dec v = Just (v - 1)
+    oneOver v = if (v == 0) then Nothing else Just (1/v)
+
+    showM (Just v) = putStrLn $ show v
+    showM (Nothing) = putStrLn "Nothing"
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
   \frametitle{Log Writer Monad}
   \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
     import Data.Monoid
