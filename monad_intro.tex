@@ -39,6 +39,8 @@
   In other words, monads are just a generalization of the semicolon in
   languages like C. They're a way of sequencing operations while doing
   the most likely thing you need to do in between the steps.
+
+  They're a nice mathematical abstraction of ``imperative languages''.
 \end{frame}
 
 \begin{frame}
@@ -76,11 +78,11 @@
   For any values $x::a$, $m::M\ d$ and any functions $f::a \rightarrow M\ b$, $g::b \rightarrow M\ c$, $h::c \rightarrow m\ d$,
   \begin{itemize}
   \item
-    $unit(x) >>= f = f(x)$
+    $return x >>= f = f x$
   \item
-    $m >>= unit = m$
+    $m >>= return = m$
   \item
-    $(m >>= g) >>= h = m >>= (\lambda y \rightarrow g(y) >>= h)$
+    $(m >>= g) >>= h = m >>= (\backslash y \rightarrow g y >>= h)$
   \end{itemize}
 \end{frame}
 
