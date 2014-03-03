@@ -1,0 +1,75 @@
+\documentclass[presentation.tex]{subfiles}
+\begin{document}
+
+
+\section{Benefits of Functional Programming}
+\begin{frame}
+  \frametitle{Referential Transparency}
+    	\begin{itemize}
+ 	\item An expression is referentially transparent if it can be replaced with its value without changing the behaviour of the program.\\
+	\item A core principle of functional programming. \\
+	\item Allows the programmer to reason about a program's behaviour.
+	  	\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Higher Order Functions}
+     	\begin{itemize}
+ 	\item A higher order function takes one or more functions as input or outputs a function.
+	\item Heavily used in functional programming.
+	  	\end{itemize} 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Higher Order Functions}
+	 \begin{itemize}
+	 \item Example (Python): \\ \;
+	
+	{def f(x): \\
+	\addtolength{\leftskip}{7mm} return x + 3\\}
+
+	{def twice(function, x): \\
+	\addtolength{\leftskip}{7mm} return function(function(x)) \\}
+	print(twice(f,7)) \;
+	
+	\item Example (Haskell): \\ \;
+	f = (+ 3) \\
+	twice function = function . function \\
+	main = print (twice f 7)
+	\item prints out 13
+	  \end{itemize} 
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Lazy Evaluation}
+  	\begin{itemize}
+\item   An evaluation strategy which delays the evaluation of an expression until its value is needed and which also avoids repeated evaluations. \\
+ \item This allows benefits such as programming with infinite lists that are only calculated when called upon.
+   \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Lazy Evaluation}
+    	\begin{itemize}
+ \item Example: \\ \;
+  x = [1..] \\
+  take 5 (map ($\wedge$ 2) x) \\
+ \item This code creates an "infinite" list of numbers, squares each of them, and then returns a list of the first five. \\
+ \item "map" is a higher order function which applies a given function to every element of a given list
+\item returns [1 4 9 16 25]
+	  \end{itemize} 
+\end{frame}  
+
+\section{References}
+\begin{frame}
+  \frametitle{References}
+
+
+\end{frame}
+
+
+\end{document}
