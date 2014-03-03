@@ -53,7 +53,7 @@
     $M\ a$
 
   \item[Unit Function]
-    $return::a\rightarrow M\ a$\\
+    $\return::a\rightarrow M\ a$\\
     Wrap a regular value into a Monadic type.
 
   \item[Bind Function]
@@ -78,11 +78,11 @@
   For any values $x::a$, $m::M\ d$ and any functions $f::a \rightarrow M\ b$, $g::b \rightarrow M\ c$, $h::c \rightarrow m\ d$,
   \begin{itemize}
   \item
-    $return x >>= f = f x$
+    $\return x >>= f = f x$
   \item
-    $m >>= return = m$
+    $m >>= \return = m$
   \item
-    $(m >>= g) >>= h = m >>= (\backslash y \rightarrow g y >>= h)$
+    $(m >>= g) >>= h = m >>= (\lambda y \rightarrow g y >>= h)$
   \end{itemize}
 \end{frame}
 
