@@ -1,5 +1,6 @@
 \documentclass[]{beamer}
 
+\usepackage{subfiles}
 \usepackage{preamble}
 
 \begin{document}
@@ -23,6 +24,8 @@
       map (head &&& length) $ (group . sort)
     \end{lstlisting}
 \end{frame}
+
+\subfile{monad_intro.tex}
 
 \section{Contributions and Resources}
 \begin{frame}

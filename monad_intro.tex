@@ -1,0 +1,221 @@
+\documentclass[presentation.tex]{subfiles}
+
+% An example showing M a --> M b where a != b might be good, e.g. add
+% the show function to the maybe monad to go from a Number to a
+% String.
+
+\begin{document}
+
+\section{Monads}
+\begin{frame}
+  \frametitle{Problems!}
+
+  With purity and laziness some problems come up.
+
+  \begin{itemize}
+  \item How can we do things like I/O if functions always return the same value?
+  \item What about randomness?
+  \item How do we make sure laziness doesn't interfere with things like I/O?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{What is a Monad?}
+
+  A way of sequencing computations with extra processing being done
+  implicitly at each step.
+
+  %This extra processing means that the behavior of computation can be
+  %based on earlier results.
+
+  %% Maibe include what wikipedia says...
+  %In functional programming, a monad is a structure that represents
+  %computations defined as sequences of steps. A type with a monad
+  %structure defines what it means to chain operations, or nest
+  %functions of that type together.  \pause
+\end{frame}
+
+\begin{frame}
+  In other words, monads are just a generalization of the semicolon in
+  languages like C. They're a way of sequencing operations while doing
+  the most likely thing you need to do in between the steps.
+
+  They're a nice mathematical abstraction of ``imperative languages''.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Formal Definition}
+
+  A Monad is a collection of the following entities.
+
+  \begin{description}
+  \item[Type Constructor]
+    $M\ a$
+
+  \item[Unit Function]
+    $\return::a\rightarrow M\ a$\\
+    Wrap a regular value into a Monadic type.
+
+  \item[Bind Function]
+    $(>>=)::M\ a\rightarrow(a\rightarrow M\ b)\rightarrow b$\\
+    Unwrap $M\ a$, do some processing and maybe get a value of type $a$, then
+    apply $(a\rightarrow M\ b)$ to get a new wrapped value, return a value of
+    type $M\ b$.
+
+    Note that $a=b$ may or may not be the case.
+  \end{description}
+\end{frame}
+
+\begin{frame}
+  \frametitle{How Monads Are Used}
+
+  Sequence together ``computation'' functions of type $a \rightarrow
+  M\ b$ using the $>>=$ function.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Monad Rules}
+  For any values $x::a$, $m::M\ d$ and any functions $f::a \rightarrow M\ b$, $g::b \rightarrow M\ c$, $h::c \rightarrow m\ d$,
+  \begin{itemize}
+  \item
+    $\return x >>= f = f x$
+  \item
+    $m >>= \return = m$
+  \item
+    $(m >>= g) >>= h = m >>= (\lambda y \rightarrow g y >>= h)$
+  \end{itemize}
+
+  The monad laws are extremely valuable for helping the programmer
+  understand what monadic code is doing. It provides guarantees about
+  the behaviour of bind ($>>=$) and unit (return)
+\end{frame}
+
+% Python example?
+
+\begin{frame}[fragile]
+  \frametitle{Maybe Monad in Haskell}
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    data Maybe a = Just a | Nothing
+
+    instance Monad Maybe where
+        return v = Just v
+        v >>= f = case v of
+                       Just v -> f(v)
+                       Nothing -> Nothing
+
+    inc v = Just (v + 1)
+    dec v = Just (v - 1)
+    oneOver v = if (v == 0) then Nothing else Just (1/v)
+
+    showM (Just v) = putStrLn $ show v
+    showM (Nothing) = putStrLn "Nothing"
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Log Writer Monad}
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    import Data.Monoid
+
+    newtype Writer w a = Writer { runWriter :: (a,w) }
+
+    instance (Monoid w) => Monad (Writer w) where
+        return a             = Writer (a, mempty)
+        (Writer (a,w)) >>= f = let (a',w') = runWriter $ f a
+                                 in Writer (a', w `mappend` w')
+  \end{lstlisting}
+  \pause
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    inc i    = Writer (i + 1, "incremented. ")
+    dec i    = Writer (i - 1, "decremented. ")
+    double i = Writer (i * 2, "doubled. ")
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{List Monad}
+
+  The list monad represents a non-deterministic computation. Any
+  function which returns a list can be viewed as a non-deterministic
+  computation -- each element in the list is a possible result.
+
+  Tic Tac Toe can be modeled this way. Each turn produces a number of
+  possible results depending on where the player decides to go.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{List Monad}
+
+  Getting a list of all possible states after two turns is a bit more
+  difficult! With the list monad we can sequence turns quite easily!
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    -- Definition of return
+    return x = [x]
+
+    -- Definition of bind
+    xs >>= f = concat (map f xs)
+  \end{lstlisting}
+
+  Now let's look at Tic Tac Toe.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{List Monad Laws}
+
+  Recall the Monad laws...
+
+  \begin{itemize}
+  \item
+    $\return x >>= f = f x$
+  \item
+    $m >>= \return = m$
+  \item
+    $(m >>= g) >>= h = m >>= (\lambda y \rightarrow g y >>= h)$
+  \end{itemize}
+
+  It's clear that the list monad obeys these laws.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{IO Monad}
+
+  IO is pretty tricky business in a pure / lazy language.
+
+  \begin{itemize}
+  \item IO involves external state
+  \item IO functions can not be referentially transparent.
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    -- Clearly not a guarantee!
+    getChar == getChar
+  \end{lstlisting}
+
+  \item No guarantee of execution order because of laziness.
+  \end{itemize}
+
+  However we clearly need IO, otherwise we can't really do anything.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{IO Monad}
+
+  Any function which performs any IO can not be guaranteed to be
+  referentially transparent. We want to minimize the number of IO
+  functions, and we want to keep track of functions that perform IO.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{IO Monad}
+
+  Haskell provides the IO monad. When wrapped around a type you can
+  not retrieve any values from the IO monad -- the value is stuck
+  within the IO type forever.
+
+  This causes anything which performs IO to have an IO type, so it is
+  appropriately labeled as performing IO. IO monad taints any function
+  which uses it, making sure that it is typed as being impure.
+\end{frame}
+
+
+\end{document}
