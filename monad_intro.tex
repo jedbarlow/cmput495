@@ -57,7 +57,7 @@
     Wrap a regular value into a Monadic type.
 
   \item[Bind Function]
-    $(>>=)::M\ a\rightarrow(a\rightarrow M\ b)\rightarrow b$\\
+    $(>>=)::M\ a\rightarrow(a\rightarrow M\ b)\rightarrow M\ b$\\
     Unwrap $M\ a$, do some processing and maybe get a value of type $a$, then
     apply $(a\rightarrow M\ b)$ to get a new wrapped value, return a value of
     type $M\ b$.
@@ -177,5 +177,32 @@
   which uses it, making sure that it is typed as being impure.
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Elmer Fudd The Glorious IO Example}
+
+  So, it seems we can't mix IO at all with pure functions, which means
+  poor Elmer Fudd will never talk to the outside world.
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    -- Turns any string into soft spoken Fuddy fun times
+    elmerFudd :: String -> String
+    elmerFudd = map (\c -> if c == 'r' || c == 'R' then 'w' else toLower c)
+  \end{lstlisting}
+
+  This is a simple enough pure function, but how can we actually give
+  Elmer their script?
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Elmer Fudd The Glorious IO Example}
+
+  Monads are a way of sneakily unwrapping IO. Look at bind:
+
+  \[(>>=)::M\ a\rightarrow(a\rightarrow M\ b)\rightarrow b\]
+
+  In the case of the IO monad this becomes:
+
+  \[(>>=)::\io\ a\rightarrow(a\rightarrow \io\ b)\rightarrow b\]
+\end{frame}
 
 \end{document}
