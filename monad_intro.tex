@@ -198,11 +198,14 @@
 
   Monads are a way of sneakily unwrapping IO. Look at bind:
 
-  \[(>>=)::M\ a\rightarrow(a\rightarrow M\ b)\rightarrow b\]
+  \[(>>=)::M\ a\rightarrow(a\rightarrow M\ b)\rightarrow M\ b\]
 
-  In the case of the IO monad this becomes:
+  In the context of the IO monad this becomes:
 
-  \[(>>=)::\io\ a\rightarrow(a\rightarrow \io\ b)\rightarrow b\]
+  \[(>>=)::\io\ a\rightarrow(a\rightarrow \io\ b)\rightarrow \io\ b\]
+
+  We can cheese the value in the first piece of IO out, as long as the
+  function takes the value to another value mapped in IO.
 \end{frame}
 
 \end{document}
