@@ -84,6 +84,10 @@
   \item
     $(m >>= g) >>= h = m >>= (\lambda y \rightarrow g y >>= h)$
   \end{itemize}
+
+  The monad laws are extremely valuable for helping the programmer
+  understand what monadic code is doing. It provides guarantees about
+  the behaviour of bind ($>>=$) and unit (return)
 \end{frame}
 
 % Python example?
@@ -99,10 +103,38 @@
   possible results depending on where the player decides to go.
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{List Monad}
 
   Getting a list of all possible states after two turns is a bit more
-  difficult! With the list monad we can sequence turns...
+  difficult! With the list monad we can sequence turns quite easily!
+
+  \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+    -- Definition of return
+    return x = [x]
+
+    -- Definition of bind
+    xs >>= f = concat (map f xs)
+  \end{lstlisting}
+
+  Now let's look at Tic Tac Toe.
 \end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{List Monad Laws}
+
+  Recall the Monad laws...
+
+  \begin{itemize}
+  \item
+    $\return x >>= f = f x$
+  \item
+    $m >>= \return = m$
+  \item
+    $(m >>= g) >>= h = m >>= (\lambda y \rightarrow g y >>= h)$
+  \end{itemize}
+
+  It's clear that the list monad obeys these laws.
+\end{frame}
+
 \end{document}
