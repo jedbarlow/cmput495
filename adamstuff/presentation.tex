@@ -1,0 +1,51 @@
+\documentclass[]{beamer}
+
+\usepackage{preamble}
+
+\begin{document}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\section{Introduction}
+\begin{frame}[fragile]
+    \frametitle{Introduction}
+
+    \begin{lstlisting}[frame=single,language=Python,breaklines=true]
+      from itertools import groupby
+
+      wordlist.sort()
+      wordcounts = [(word, len(list(repeats))) for word, repeats in groupby(wordlist)]
+    \end{lstlisting}
+
+    \begin{lstlisting}[frame=single,language=Haskell,breaklines=true]
+      map (head &&& length) $ (group . sort)
+    \end{lstlisting}
+\end{frame}
+
+\section{Contributions and Resources}
+\begin{frame}
+    \begin{itemize}
+        \item Author Contributions\\{\scriptsize(in alphabetical order of first name)}
+            \begin{itemize}
+                \item Adam St. Arnaud:
+                    ...
+                \item Calvin Beck:
+                    ...
+                \item Dylan Ashley:
+                    ...
+                \item Hannah Barlow:
+                    ...
+                \item Jed Barlow:
+                    ...
+            \end{itemize}
+        \item Resources
+            \begin{itemize}
+                \item
+                    http://some.website.com/file
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\end{document}
