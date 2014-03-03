@@ -12,6 +12,39 @@
 	  	\end{itemize}
 \end{frame}
 
+
+\begin{frame}
+  \frametitle{Typing}
+     	\begin{itemize}
+ 	\item Haskell is a \textbf{strongly} and \textbf{statically} typed language. 
+	\item This means that the types of variables never change, and types are never coerced into other types.
+		\item A good example of a weakly typed language is C.
+	  	\end{itemize} 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Typing}
+     	\begin{itemize}
+ 	\item Haskell utilizes \textbf{Typeclasses}, which are sets of types that share a certain property.
+	\item Examples: \\
+	The Typeclass "Num" contains all types with arithmetic. \\
+	The Typeclass "Ord" contains all types that can be ordered.
+	  	\end{itemize} 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Type Signatures}
+     	\begin{itemize}
+ 	\item Any variable in Haskell has a \textbf{type signature} which gives information about its type.
+	\item Examples: \\
+	(\&\&) :: Bool -$>$ Bool -$>$ Bool \\
+	head :: [a] -$>$ a \\
+	chr :: Int -$>$ Char \\
+	map :: (a-$>$b) -$>$ [a] -$>$ [b] \\
+	sort :: (Ord a) =$>$ [a] -$>$ [a]
+	  	\end{itemize} 
+\end{frame}
+
 \begin{frame}
   \frametitle{Higher Order Functions}
      	\begin{itemize}
@@ -70,6 +103,8 @@
 
 
 \end{frame}
+
+
 
 
 \end{document}
